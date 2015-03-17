@@ -23,6 +23,8 @@ var sp = new SocketPeer({
   httpServer: httpServer
 });
 
-httpServer.listen('3000', '0.0.0.0', function () {
-  console.log('Server listening on 0.0.0.0:3000');
+var port = (process.env.PORT || 3000);
+
+httpServer.listen(port, '0.0.0.0', function () {
+  console.log('Server listening on 0.0.0.0:%d', port);
 });
