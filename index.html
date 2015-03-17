@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      pre {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <pre>talky thing</pre>
+    <input placeholder='message'>
+    <script src="socketpeer.js"></script>
+    <script>
+
+      var code = location.hash;
+
+      var peer = new SocketPeer({
+        pairCode: code,
+        url: location.origin
+      });
+
+      var out = document.querySelector('pre');
+      function write(msg) {
+        out.innerHTML += '<div>' + msg + '</div>';
+        out.scrollTop = out.scrollHeight;
+      }
+
+      var input = document.querySelector('input');
+      input.addEventListener('keypress', function (e) {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+          write('you: ' + input.value);
+          peer.send(input.value);
+          input.value = '';
+          input.focus();
+        }
+      });
+
+      peer.on('data', function (data) {
+        write('them: ' + data);
+      });
+
+      peer.on('upgrade', function() {
+        write('upgraded to p2p');
+      });
+
+      peer.on('connect', function() {
+        write('connected to peer');
+      });
+
+      write('waiting for peer');
+      </script>
+  </body>
+</html>
