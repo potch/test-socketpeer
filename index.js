@@ -2,17 +2,17 @@ var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var SocketPeer = require('socketpeer');
+var url = require('url');
 
 var httpServer = http.createServer(function (req, res) {
   var stream;
-  var url = req.url;
-  console.log(url);
-  if (url === '/') {
+  var p = url.parse(req.url).pathname;
+  if (p === '/') {
     res.writeHead(200, {'Content-Type': 'text/html'});
     stream = fs.createReadStream(path.join(__dirname, 'index.html'));
     stream.pipe(res);
   }
-  if (url === '/socketpeer.js') {
+  if (p === '/socketpeer.js') {
     res.writeHead(200, {'Content-Type': 'text/javascript'});
     stream = fs.createReadStream(path.join(__dirname, 'node_modules/socketpeer/socketpeer.js'));
     stream.pipe(res);

@@ -28,7 +28,12 @@
     <script src="socketpeer.js"></script>
     <script>
 
-      var code = location.hash;
+      var code = location.search;
+      var big = Math.pow(16,10);
+      if (!code) {
+        code = ((Math.random() * big |0)+ big).toString(16);
+        history.replaceState(null, null, "?" + code);
+      }
 
       var peer = new SocketPeer({
         pairCode: code,
