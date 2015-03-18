@@ -19,6 +19,7 @@
       }
       pre {
         flex: 1;
+        overflow: auto;
       }
     </style>
   </head>
@@ -42,10 +43,14 @@
         url: location.origin
       });
 
+      function pad(n) {
+        return ('0' + n).substr(-2);
+      }
+
       var out = document.querySelector('pre');
       function write(msg) {
         var d = new Date();
-        var stamp = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
+        var stamp = [d.getHours(), d.getMinutes(), d.getSeconds()].map(pad).join(':');
         out.innerHTML += '<div>[' + stamp + ']  ' + msg + '</div>';
         out.scrollTop = out.scrollHeight;
       }
