@@ -46,7 +46,7 @@
       function write(msg) {
         var d = new Date();
         var stamp = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
-        out.innerHTML += '<div>' + stamp + ' ' + msg + '</div>';
+        out.innerHTML += '<div>[' + stamp + ']  ' + msg + '</div>';
         out.scrollTop = out.scrollHeight;
       }
 
