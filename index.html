@@ -28,7 +28,7 @@
     <script src="socketpeer.js"></script>
     <script>
 
-      var code = location.search;
+      var code = location.search.substr(1);
       var big = Math.pow(16,10);
       var connect = false;
 
@@ -44,7 +44,9 @@
 
       var out = document.querySelector('pre');
       function write(msg) {
-        out.innerHTML += '<div>' + msg + '</div>';
+        var d = new Date();
+        var stamp = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
+        out.innerHTML += '<div>' + stamp + ' ' + msg + '</div>';
         out.scrollTop = out.scrollHeight;
       }
 
