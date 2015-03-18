@@ -30,6 +30,8 @@
 
       var code = location.search;
       var big = Math.pow(16,10);
+      var connect = false;
+
       if (!code) {
         code = ((Math.random() * big |0)+ big).toString(16);
         history.replaceState(null, null, "?" + code);
@@ -48,9 +50,9 @@
 
       var input = document.querySelector('input');
       input.addEventListener('keypress', function (e) {
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 && connected) {
           e.preventDefault();
-          write('you: ' + input.value);
+          write('<b>you:</b> ' + input.value);
           peer.send(input.value);
           input.value = '';
           input.focus();
@@ -58,18 +60,32 @@
       });
 
       peer.on('data', function (data) {
-        write('them: ' + data);
+        write('<b>them:</b> ' + data);
       });
 
       peer.on('upgrade', function() {
         write('upgraded to p2p');
+        connected = true;
       });
 
       peer.on('connect', function() {
-        write('connected to peer');
+        write('negotiating with peer');
       });
 
-      write('waiting for peer');
+      peer.on('busy', function () {
+        write('peer connected to someone else')
+      });
+
+      peer.on('error', function (err) {
+        write('connection error: ' + err);
+      });
+
+      peer.on('downgrade', function () {
+        write('p2p connection broken');
+        connected = false;
+      });
+
+      write('waiting for peer at ' + location.href);
       </script>
   </body>
 </html>
