@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "socketpeer": "^1.0.0"
+    "socketpeer": "^1.0.1"
   }
 }

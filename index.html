@@ -12,7 +12,7 @@
         margin: 0;
       }
       body {
-        padding: 1em;
+        padding: .5em;
         display: flex;
         flex-direction: column;
         align-items: stretch;
@@ -20,15 +20,21 @@
       pre {
         flex: 1;
         overflow: auto;
+        white-space: pre-wrap;
+      }
+      input, pre {
+        font: normal 20px monospace;
       }
     </style>
   </head>
   <body>
-    <pre>talky thing</pre>
+    <pre>
+socketpeer test app
+<a href="https://github.com/potch/test-socketpeer">project on github</a>
+    </pre>
     <input placeholder='message'>
-    <script src="socketpeer.js"></script>
+    <script src="/socketpeer/socketpeer.js"></script>
     <script>
-
       var code = location.search.substr(1);
       var big = Math.pow(16,10);
       var connect = false;
@@ -40,7 +46,7 @@
 
       var peer = new SocketPeer({
         pairCode: code,
-        url: location.origin
+        url: location.origin + '/socketpeer/'
       });
 
       function pad(n) {
@@ -51,7 +57,9 @@
       function write(msg) {
         var d = new Date();
         var stamp = [d.getHours(), d.getMinutes(), d.getSeconds()].map(pad).join(':');
-        out.innerHTML += '<div>[' + stamp + ']  ' + msg + '</div>';
+        var row = document.createElement('div');
+        row.appendChild(document.createTextNode('[' + stamp + '] ' + msg))
+        out.appendChild(row);
         out.scrollTop = out.scrollHeight;
       }
 
@@ -59,7 +67,7 @@
       input.addEventListener('keypress', function (e) {
         if (e.keyCode === 13 && connected) {
           e.preventDefault();
-          write('<b>you:</b> ' + input.value);
+          write('<you> ' + input.value);
           peer.send(input.value);
           input.value = '';
           input.focus();
@@ -67,7 +75,7 @@
       });
 
       peer.on('data', function (data) {
-        write('<b>them:</b> ' + data);
+        write('<them> ' + data);
       });
 
       peer.on('upgrade', function() {
@@ -75,7 +83,7 @@
         connected = true;
       });
 
-      peer.on('connect', function() {
+      peer.on('upgrade_attempt', function() {
         write('negotiating with peer');
       });
 
@@ -92,7 +100,8 @@
         connected = false;
       });
 
-      write('waiting for peer at ' + location.href);
-      </script>
+      write('waiting for another user to go to ' + location.href);
+      input.focus();
+    </script>
   </body>
 </html>
