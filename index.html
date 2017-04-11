@@ -37,7 +37,7 @@ socketpeer test app
     <script>
       var code = location.search.substr(1);
       var big = Math.pow(16,10);
-      var connect = false;
+      var connected = false;
 
       if (!code) {
         code = ((Math.random() * big |0)+ big).toString(16);
