@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "author": "",
+  "author": "Matthew Claypotch <me@potch.me>",
   "license": "ISC",
   "dependencies": {
     "socketpeer": "^1.0.1"
