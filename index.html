@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       * {
         box-sizing: border-box;
@@ -24,15 +24,16 @@
       }
       input, pre {
         font: normal 20px monospace;
+        padding: .3em;
       }
     </style>
   </head>
   <body>
     <pre>
-socketpeer test app
-<a href="https://github.com/potch/test-socketpeer">project on github</a>
+<strong>SocketPeer</strong> test app
+<a href="https://github.com/potch/test-socketpeer">project on GitHub</a>
     </pre>
-    <input placeholder='message'>
+    <input placeholder="message" autofocus autocomplete="off">
     <script src="/socketpeer/socketpeer.js"></script>
     <script>
       var code = location.search.substr(1);
@@ -41,7 +42,7 @@ socketpeer test app
 
       if (!code) {
         code = ((Math.random() * big |0)+ big).toString(16);
-        history.replaceState(null, null, "?" + code);
+        history.replaceState(null, null, '?' + code);
       }
 
       var peer = new SocketPeer({
